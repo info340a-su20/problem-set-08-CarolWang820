@@ -6,3 +6,57 @@ const EXAMPLE_SENATORS = [
 ];
 
 /* Your code goes here */
+
+export class App extends Component {
+  render() {
+    return (
+      <div className="container">
+        <h1>US Senators 2019</h1>
+        <SenatorTable senators={this.props.senators}/>
+      </div>
+    )
+  }
+}
+
+export class SenatorTable extends Component {
+  render() {
+    let senators = this.props.senators.map((element) => <SenatorRow senator={element}/>)
+    return (
+      <table className="table table-bordered">
+        <TableHeader cols={['Name', 'State', 'Phone', 'Twitter']} />
+        <tbody>
+          {senators}
+        </tbody>
+      </table>
+    )
+  }
+}
+
+export class TableHeader extends Component {
+  render() {
+    let column = this.props.cols;
+    return (
+      <thead>
+        <tr>
+          {column.map((header) => {
+            return <th key={header}>{header}</th>
+          })}
+        </tr>
+      </thead>
+    )
+  }
+}
+
+export class SenatorRow extends Component {
+  render() {
+    let twitter = this.props.senator.twitter;
+    return (
+      <tr>
+        <td>{this.props.senator.name}</td>
+        <td>{this.props.senator.party.substring(0, 1) + " - " + this.props.senator.state}</td>
+        <td><a href={"tel:" + this.props.senator.phone}>{this.props.senator.phone}</a></td>
+        <td><a href={"https://twitter.com/" + twitter}>{"@" + twitter}</a></td>
+      </tr>
+    );
+  }
+}
